@@ -64,8 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Ball.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Goal.cs" />
     <Compile Include="Assets\Scripts\MoveRacket.cs" />
+    <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Programming/repo/Unity Projects/pong/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

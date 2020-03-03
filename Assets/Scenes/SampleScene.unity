@@ -431,6 +431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ce23ced3d1e4d06a10d6d0441e49c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerNumber: 2
+  PointsToGive: 1
 --- !u!1 &414903222
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +445,7 @@ GameObject:
   - component: {fileID: 414903225}
   - component: {fileID: 414903224}
   m_Layer: 5
-  m_Name: Player1Score
+  m_Name: Player1ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -778,6 +780,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ce23ced3d1e4d06a10d6d0441e49c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerNumber: 1
+  PointsToGive: 1
 --- !u!1 &1094046400
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,7 +1292,7 @@ GameObject:
   - component: {fileID: 1616079771}
   - component: {fileID: 1616079770}
   m_Layer: 5
-  m_Name: Player2Score
+  m_Name: Player2ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
