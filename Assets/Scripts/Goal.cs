@@ -11,7 +11,6 @@ public class Goal : MonoBehaviour
             var gameManager = GameManager.Instance;
             gameManager.SetGameState(GameState.WaitForStart);
             gameManager.ScoreManager.GivePointsToPlayer(PlayerNumber, PointsToGive);
-            Destroy(collision.collider.gameObject);
         }
     }
 }

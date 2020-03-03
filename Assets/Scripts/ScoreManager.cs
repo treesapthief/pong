@@ -15,8 +15,6 @@ public class ScoreManager : MonoBehaviour
 
     protected ScoreManager()
     {
-        Player1ScoreText = GameObject.Find("Player1ScoreText");
-        Player2ScoreText = GameObject.Find("Player2ScoreText");
     }
 
     public static ScoreManager Instance

@@ -14,12 +14,26 @@ public class GameManager : MonoBehaviour
 {
     public event OnStateChangeHandler OnStateChange;
     public GameState GameState { get; private set; }
+    public ScoreManager ScoreManager { get; private set; }
 
     private static GameManager _instance = null;
 
     protected GameManager()
     {
-        ScoreManager = ScoreManager.Instance;
+        GameState = GameState.WaitForStart;
+    }
+
+    private void Start()
+    {
+        ScoreManager = GetComponent<ScoreManager>();
+    }
+
+    private void Update()
+    {
+        if (GameState == GameState.WaitForStart && Input.anyKeyDown)
+        {
+            SetGameState(GameState.InGame);
+        }
     }
 
     public static GameManager Instance
@@ -35,7 +49,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public ScoreManager ScoreManager { get; set; }
 
     public void SetGameState(GameState state)
     {

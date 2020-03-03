@@ -1,36 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public float speed = 30;
+    public float Speed = 30;
+    public Vector2 StartingPosition;
 
-    // Start is called before the first frame update
-    void Start()
+    private Rigidbody2D _rigidbody2D;
+
+
+    private void Start()
     {
-        GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        GameManager.Instance.OnStateChange += UpdateBallMovement;
     }
 
-    void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.name == "RacketLeft") {
-            float y = hitFactor(transform.position, collision.transform.position,
-            collision.collider.bounds.size.y);
-            Vector2 dir = new Vector2(1, y).normalized;
+    private void Update()
+    {
+        if (GameManager.Instance.GameState == GameState.WaitForStart)
+        {
+            ResetPosition();
+        }
+    }
 
-            GetComponent<Rigidbody2D>().velocity = dir * speed;
+    private void Move()
+    {
+        if (DisallowMovement())
+        {
+            _rigidbody2D.velocity = Vector2.zero;
+        }
+        else
+        {
+            _rigidbody2D.velocity = Vector2.right * Speed;
+        }
+    }
+
+    private void ResetPosition()
+    {
+        _rigidbody2D.position = StartingPosition;
+    }
+
+    private void UpdateBallMovement()
+    {
+        Move();
+    }
+
+    private static bool DisallowMovement()
+    {
+        var gameState = GameManager.Instance.GameState;
+        return gameState == GameState.GameOver || gameState == GameState.Paused || gameState == GameState.WaitForStart;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "RacketLeft")
+        {
+            var y = HitFactor(transform.position, collision.transform.position,
+            collision.collider.bounds.size.y);
+            var dir = new Vector2(1, y).normalized;
+
+            GetComponent<Rigidbody2D>().velocity = dir * Speed;
         }
 
-        if (collision.gameObject.name == "RacketRight") { 
-            float y = hitFactor(transform.position,
+        if (collision.gameObject.name == "RacketRight")
+        {
+            var y = HitFactor(transform.position,
             collision.transform.position,
             collision.collider.bounds.size.y);
-            Vector2 dir = new Vector2(-1, y).normalized;
-            GetComponent<Rigidbody2D>().velocity = dir * speed;
+            var dir = new Vector2(-1, y).normalized;
+            GetComponent<Rigidbody2D>().velocity = dir * Speed;
         }
     }
 
-    float hitFactor(Vector2 ballPos, Vector2 racketPos, float racketHeight) {
+    private float HitFactor(Vector2 ballPos, Vector2 racketPos, float racketHeight)
+    {
         return (ballPos.y - racketPos.y) / racketHeight;
     }
 }
