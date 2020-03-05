@@ -10,6 +10,7 @@ public class ScoreManager : MonoBehaviour
 
     private int _player1Score;
     private int _player2Score;
+    private int _winningPlayerNumber;
 
     private static ScoreManager _instance = null;
 
@@ -77,15 +78,32 @@ public class ScoreManager : MonoBehaviour
             Debug.LogWarning($"Invalid Player Number: {playerNumber}");
         }
 
-        if (score >= PointsToWin)
+        if (_player1Score >= PointsToWin)
         {
+            SetWinningPlayerNumber(1);
             GameManager.Instance.SetGameState(GameState.GameOver);
         }
+        else if (_player2Score >= PointsToWin)
+        {
+            SetWinningPlayerNumber(2);
+            GameManager.Instance.SetGameState(GameState.GameOver);
+        }
+    }
+
+    public int GetWinningPlayerNumber()
+    {
+        return _winningPlayerNumber;
+    }
+
+    private void SetWinningPlayerNumber(int playerNumber)
+    {
+        _winningPlayerNumber = playerNumber;
     }
 
     public void Reset()
     {
         SetPlayerScore(0, 1);
         SetPlayerScore(0, 2);
+        SetWinningPlayerNumber(0);
     }
 }

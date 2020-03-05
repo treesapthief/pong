@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOverHandler : MonoBehaviour
+public class GameOverManager : MonoBehaviour
 {
     public GameObject GameOverPanel;
     public Text PlayerWinsText;
@@ -12,18 +12,14 @@ public class GameOverHandler : MonoBehaviour
         GameManager.Instance.OnStateChange += ToggleGameOverPanel;
     }
 
-    public void SetWinningPlayer(int playerNumber)
-    {
-        _winningPlayerNumber = playerNumber;
-    }
-
     private void ToggleGameOverPanel()
     {
         var isGameOver = GameManager.Instance.GameState == GameState.GameOver;
 
         if (isGameOver)
         {
-            PlayerWinsText.text = $"Player {_winningPlayerNumber} Wins";
+            var winningPlayerNumber = ScoreManager.Instance.GetWinningPlayerNumber();
+            PlayerWinsText.text = $"Player {winningPlayerNumber} Wins";
         }
 
         GameOverPanel.SetActive(isGameOver);
