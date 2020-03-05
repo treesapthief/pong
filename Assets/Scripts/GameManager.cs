@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public event OnStateChangeHandler OnStateChange;
     public GameState GameState { get; private set; }
     public ScoreManager ScoreManager { get; private set; }
-
+    
     private static GameManager _instance = null;
 
     protected GameManager()
@@ -33,6 +33,12 @@ public class GameManager : MonoBehaviour
         if (GameState == GameState.WaitForStart && Input.anyKeyDown)
         {
             SetGameState(GameState.InGame);
+        }
+        else if (GameState == GameState.GameOver && Input.anyKeyDown)
+        {
+
+            SetGameState(GameState.WaitForStart);
+            ScoreManager.Instance.Reset();
         }
     }
 

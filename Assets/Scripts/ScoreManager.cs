@@ -32,31 +32,19 @@ public class ScoreManager : MonoBehaviour
 
     public void GivePointsToPlayer(int playerNumber, int pointsToGive)
     {
+        var currentScore = 0;
+
         if (playerNumber == 1)
         {
-            _player1Score += pointsToGive;
-            var text = Player1ScoreText.GetComponent<Text>();
-            text.text = _player1Score.ToString();
+            currentScore = _player1Score;
         }
         else if (playerNumber == 2)
         {
-            _player2Score += pointsToGive;
-            var text = Player2ScoreText.GetComponent<Text>();
-            text.text = _player2Score.ToString();
-        }
-        else
-        {
-            Debug.LogWarning($"Invalid Player Number: {playerNumber}");
+            currentScore = _player2Score;
         }
 
-        if (_player1Score > PointsToWin)
-        {
-            GameManager.Instance.SetGameState(GameState.GameOver);
-        }
-        else if (_player2Score > PointsToWin)
-        {
-            GameManager.Instance.SetGameState(GameState.GameOver);
-        }
+        var score = currentScore + pointsToGive;
+        SetPlayerScore(score, playerNumber);
     }
 
     private void Awake()
@@ -68,5 +56,36 @@ public class ScoreManager : MonoBehaviour
 
         _instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void SetPlayerScore(int score, int playerNumber)
+    {
+        if (playerNumber == 1)
+        {
+            _player1Score = score;
+            var text = Player1ScoreText.GetComponent<Text>();
+            text.text = _player1Score.ToString();
+        }
+        else if (playerNumber == 2)
+        {
+            _player2Score = score;
+            var text = Player2ScoreText.GetComponent<Text>();
+            text.text = _player2Score.ToString();
+        }
+        else
+        {
+            Debug.LogWarning($"Invalid Player Number: {playerNumber}");
+        }
+
+        if (score >= PointsToWin)
+        {
+            GameManager.Instance.SetGameState(GameState.GameOver);
+        }
+    }
+
+    public void Reset()
+    {
+        SetPlayerScore(0, 1);
+        SetPlayerScore(0, 2);
     }
 }
