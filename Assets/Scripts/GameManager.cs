@@ -2,13 +2,14 @@
 
 public enum GameState
 {
+    NewGame,
     WaitForStart,
     InGame,
     Paused,
     GameOver
 }
 
-public delegate void OnStateChangeHandler();
+public delegate void OnStateChangeHandler(GameState newState);
 
 public class GameManager : MonoBehaviour
 {
@@ -36,8 +37,7 @@ public class GameManager : MonoBehaviour
         }
         else if (GameState == GameState.GameOver && Input.anyKeyDown)
         {
-
-            SetGameState(GameState.WaitForStart);
+            SetGameState(GameState.NewGame);
             ScoreManager.Instance.Reset();
         }
     }
@@ -58,8 +58,9 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameState state)
     {
+        Debug.Log($"GameState changed: {state}");
         GameState = state;
-        OnStateChange?.Invoke();
+        OnStateChange?.Invoke(state);
     }
 
     private void Awake()

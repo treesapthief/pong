@@ -22,9 +22,9 @@ public class Ball : MonoBehaviour
         }
     }
 
-    private void Move()
+    private void Move(GameState state)
     {
-        if (DisallowMovement())
+        if (DisallowMovement(state))
         {
             _rigidbody2D.velocity = Vector2.zero;
         }
@@ -39,14 +39,13 @@ public class Ball : MonoBehaviour
         _rigidbody2D.position = StartingPosition;
     }
 
-    private void UpdateBallMovement()
+    private void UpdateBallMovement(GameState newState)
     {
-        Move();
+        Move(newState);
     }
 
-    private static bool DisallowMovement()
+    private static bool DisallowMovement(GameState gameState)
     {
-        var gameState = GameManager.Instance.GameState;
         return gameState == GameState.GameOver || gameState == GameState.Paused || gameState == GameState.WaitForStart;
     }
 

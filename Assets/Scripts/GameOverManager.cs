@@ -5,16 +5,15 @@ public class GameOverManager : MonoBehaviour
 {
     public GameObject GameOverPanel;
     public Text PlayerWinsText;
-    private int _winningPlayerNumber;
 
     private void Start()
     {
         GameManager.Instance.OnStateChange += ToggleGameOverPanel;
     }
 
-    private void ToggleGameOverPanel()
+    private void ToggleGameOverPanel(GameState newState)
     {
-        var isGameOver = GameManager.Instance.GameState == GameState.GameOver;
+        var isGameOver = newState == GameState.GameOver;
 
         if (isGameOver)
         {
@@ -22,6 +21,7 @@ public class GameOverManager : MonoBehaviour
             PlayerWinsText.text = $"Player {winningPlayerNumber} Wins";
         }
 
+        Debug.Log($"GameOverPanel Active: {isGameOver}");
         GameOverPanel.SetActive(isGameOver);
     }
 }

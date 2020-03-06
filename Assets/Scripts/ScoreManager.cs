@@ -46,6 +46,7 @@ public class ScoreManager : MonoBehaviour
 
         var score = currentScore + pointsToGive;
         SetPlayerScore(score, playerNumber);
+        CheckIfPlayerWon();
     }
 
     private void Awake()
@@ -77,7 +78,10 @@ public class ScoreManager : MonoBehaviour
         {
             Debug.LogWarning($"Invalid Player Number: {playerNumber}");
         }
+    }
 
+    private void CheckIfPlayerWon()
+    {
         if (_player1Score >= PointsToWin)
         {
             SetWinningPlayerNumber(1);
@@ -102,6 +106,7 @@ public class ScoreManager : MonoBehaviour
 
     public void Reset()
     {
+        Debug.Log("ScoreManager.Reset");
         SetPlayerScore(0, 1);
         SetPlayerScore(0, 2);
         SetWinningPlayerNumber(0);
