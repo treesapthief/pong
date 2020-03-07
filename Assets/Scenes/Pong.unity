@@ -799,7 +799,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &614054636
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1079,7 +1079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 30
   Axis: Vertical
-  StartingPosition: {x: 0, y: 0}
+  StartingPosition: {x: -22, y: 0}
 --- !u!1 &1149047225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,7 +1477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 30
   Axis: Vertical2
-  StartingPosition: {x: 0, y: 0}
+  StartingPosition: {x: 22, y: 0}
 --- !u!1 &1598149876
 GameObject:
   m_ObjectHideFlags: 0

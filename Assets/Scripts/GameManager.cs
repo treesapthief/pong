@@ -31,7 +31,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (GameState == GameState.WaitForStart && Input.anyKeyDown)
+        if (GameState == GameState.NewGame && Input.anyKeyDown)
+        {
+            SetGameState(GameState.InGame);
+        }
+        else if (GameState == GameState.WaitForStart && Input.anyKeyDown)
         {
             SetGameState(GameState.InGame);
         }

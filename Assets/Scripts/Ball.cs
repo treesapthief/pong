@@ -5,20 +5,27 @@ public class Ball : MonoBehaviour
     public float Speed = 30;
     public Vector2 StartingPosition;
 
-    private Rigidbody2D _rigidbody2D;
+    private Rigidbody2D _rigidBody2D;
 
 
     private void Start()
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _rigidBody2D = GetComponent<Rigidbody2D>();
         GameManager.Instance.OnStateChange += UpdateBallMovement;
     }
 
     private void Update()
     {
-        if (GameManager.Instance.GameState == GameState.WaitForStart)
+        CheckIfBallIsOutOfBounds();
+    }
+
+    private void CheckIfBallIsOutOfBounds()
+    {
+        var position = transform.position;
+        var isOutOfBounds = (position.x < -25 || position.x > 25 || position.y < -16 || position.y > 16);
+        if (isOutOfBounds)
         {
-            ResetPosition();
+            GameManager.Instance.SetGameState(GameState.WaitForStart);
         }
     }
 
@@ -26,27 +33,32 @@ public class Ball : MonoBehaviour
     {
         if (DisallowMovement(state))
         {
-            _rigidbody2D.velocity = Vector2.zero;
+            _rigidBody2D.velocity = Vector2.zero;
         }
         else
         {
-            _rigidbody2D.velocity = Vector2.right * Speed;
+            _rigidBody2D.velocity = Vector2.right * Speed;
         }
     }
 
     private void ResetPosition()
     {
-        _rigidbody2D.position = StartingPosition;
+        _rigidBody2D.position = StartingPosition;
+        _rigidBody2D.velocity = Vector2.zero;
     }
 
     private void UpdateBallMovement(GameState newState)
     {
         Move(newState);
+        if (newState == GameState.NewGame || newState == GameState.WaitForStart)
+        {
+            ResetPosition();
+        }
     }
 
     private static bool DisallowMovement(GameState gameState)
     {
-        return gameState == GameState.GameOver || gameState == GameState.Paused || gameState == GameState.WaitForStart;
+        return gameState != GameState.InGame;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
